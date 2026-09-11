@@ -1,10 +1,25 @@
 export class Recipe {
   _name!: string;
   _category?: string;
+  _preparationTime!: number;
   _description!: string;
 
   constructor(aName: string) {
     this.name = aName;
+  }
+
+  get preparationTime(): number {
+    return this._preparationTime;
+  }
+
+  set preparationTime(aPreparationTime: number) {
+    if (Number.isNaN(aPreparationTime)) {
+      throw new Error("El tiempo de preparacion es obligatorio.");
+    }
+    if (aPreparationTime < 0) {
+      throw new Error("El tiempo de preparacion no puede ser menor a 0.");
+    }
+    this._preparationTime = aPreparationTime;
   }
 
   get description(): string {
@@ -39,6 +54,6 @@ export class Recipe {
   }
 
   toString(): string {
-    return `Receta: ${this.name} - categoría: ${this.category} - descripcion: ${this.description}`;
+    return `Receta: ${this.name} - categoría: ${this.category} - descripcion: ${this.description} - tiempo de preparacion: ${this.preparationTime} minutos`;
   }
 }
